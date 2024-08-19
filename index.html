@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Selamat Ulang Tahun Opi</title>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            height: 100vh;
+            background-color: #f8f9fa;
+            margin: 0;
+            font-family: 'Pacifico', cursive;
+            text-align: center;
+            overflow: hidden;
+        }
+
+        h1 {
+            font-size: 3em;
+            color: #ff5353;
+            white-space: nowrap;
+            overflow: hidden;
+            border-right: 4px solid #fff;
+            animation: typing 4s steps(40, end), blink-caret 0.75s step-end infinite;
+            margin: 0;
+            padding: 0;
+        }
+
+        #footnote {
+            font-size: 24px;
+            color: #ff4081;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+            background-color: rgba(255, 255, 255, 0.8);
+            padding: 10px 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+            margin: 10px 0;
+            white-space: pre-wrap;
+            overflow: hidden;
+            display: inline-block;
+            border-right: 2px solid #ff4081;
+            animation: blinkCaret 0.75s step-end infinite;
+            max-width: 90%;
+        }
+
+        @keyframes typing {
+            from { width: 0; }
+            to { width: 100%; }
+        }
+
+        @keyframes blink-caret {
+            from, to { border-color: transparent; }
+            50% { border-color: #fff; }
+        }
+
+        #kado {
+            width: 120px;
+            height: 120px;
+            background-image: url('https://g.top4top.io/p_3153of7gj0.jpg'); 
+            background-size: cover;
+            cursor: pointer;
+            margin-top: 40px;
+            transition: transform 0.3s ease-in-out;
+            animation: pulse 1.5s infinite;
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.6);
+            border-radius: 10px;
+            position: relative;
+            z-index: 2;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+
+        #kado:hover { transform: scale(1.2); }
+
+        #kado.open { animation: boom 1s forwards; }
+
+        @keyframes boom {
+            0% { transform: scale(1); clip-path: inset(0 0 0 0); }
+            50% { transform: scale(1.5); clip-path: inset(0 0 0 0); opacity: 0.8; }
+            100% { transform: scale(3); clip-path: inset(0 0 100% 0); opacity: 0; }
+        }
+
+        #kenangan {
+            display: none;
+            margin-top: 20px;
+            text-align: center;
+            animation: fadeInMemories 1s forwards;
+            width: 90%;
+            max-width: 1200px;
+            height: auto;
+            box-sizing: border-box;
+            padding: 10px;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 10px;
+        }
+
+        #kenangan img, #kenangan video {
+            width: 100%;
+            max-width: 275px;
+            height: auto;
+            object-fit: cover;
+            border: 3px solid #ff4040;
+            border-radius: 15px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+        }
+
+        @keyframes fadeInMemories {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .petasan {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background-color: #f14f4f;
+            border-radius: 50%;
+            box-shadow: 0 0 10px rgb(255, 182, 182);
+            animation: petasanBurst 2s linear forwards;
+        }
+
+        @keyframes petasanBurst {
+            0% { transform: scale(1); opacity: 1; }
+            100% { transform: scale(3); opacity: 0; }
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Selamat Ulang Tahun Opi</h1>
+    <div id="footnote"></div>
+    <div id="kado" onclick="meledakKado()"></div>
+
+    <div id="kenangan">
+        <!-- Gambar dan video akan ditambahkan secara dinamis -->
+    </div>
+
+    <audio id="lagu" src="https://k.top4top.io/m_3153cxocj0.mp3"></audio>
+
+    <script>
+        const footnoteLines = [
+            "Selamat Ulang Tahun Opi ciee udh makin dewasa aja",
+            "maaf yaa sebelumnya belum bisa ngasi apa apa",
+            "maaf juga yaa udh ingar janji dan buat kecewa",
+            "jujur gak iklhas sih hal ini terjadi",
+            "yaaa, mau gimna lagi mungkin udh menjadi jalan kitanya",
+            "pesan ku cuma satu Semoga hari-harimu dipenuhi dengan kebahagiaan dan kesuksesan",
+            "dan aku harap suatu saat kita gak bakaln lupa satu sama lain sebagai teman heheh"
+        ];
+
+        const footnoteElement = document.getElementById('footnote');
+        let currentLine = 0;
+        let currentChar = 0;
+
+        function ketikBaris() {
+            if (currentLine >= footnoteLines.length) return;
+
+            const line = footnoteLines[currentLine];
+            footnoteElement.innerHTML = line.substring(0, currentChar) + '|';
+
+            if (currentChar < line.length) {
+                currentChar++;
+                setTimeout(ketikBaris, 100); // Adjust typing speed
+            } else {
+                currentLine++;
+                currentChar = 0;
+                setTimeout(ketikBaris, 1000); // Adjust delay between lines
+            }
+        }
+
+        function meledakKado() {
+            const kado = document.getElementById('kado');
+            kado.classList.add('open');
+            buatBalon();
+            buatPetasan();
+            const lagu = document.getElementById('lagu');
+            lagu.play();
+            setTimeout(() => {
+                kado.style.display = 'none';
+                tampilkanFootnote();
+                const kenangan = document.getElementById('kenangan');
+                kenangan.style.display = 'flex';
+                kenangan.innerHTML = `
+                    <img src="https://j.top4top.io/p_31536veid6.jpg" alt="Foto 1">
+                    <img src="https://i.top4top.io/p_31536amkm5.jpg" alt="Foto 2">
+                    <img src="https://g.top4top.io/p_3153q7aii5.jpg" alt="Foto 3">
+                    <video controls src="https://d.top4top.io/m_31534ba4v0.mp4"></video>
+                `;
+            }, 1000);
+        }
+
+        function tampilkanFootnote() {
+            footnoteElement.style.display = 'block';
+            ketikBaris(); // Start typing effect for the first line
+        }
+
+      function buatBalon() {
+            const jumlahBalon = 10;
+            for (let i = 0; i < jumlahBalon; i++) {
+                const balon = document.createElement('div');
+                balon.className = 'balon';
+                balon.style.left = `${Math.random() * 100}vw`;
+                balon.style.backgroundColor = `hsl(${Math.random() * 360}, 100%, 70%)`;
+                balon.style.animationDuration = `${Math.random() * 5 + 3}s`;
+                document.body.appendChild(balon);
+            }
+        }
+        function buatPetasan() {
+            const jumlahPetasan = 20;
+            for (let i = 0; i < jumlahPetasan; i++) {
+                const petasan = document.createElement('div');
+                petasan.className = 'petasan';
+                petasan.style.left = `${Math.random() * 100}vw`;
+                petasan.style.top = `${Math.random() * 50}vh`;
+                petasan.style.animationDelay = `${Math.random() * 1.5}s`;
+                document.body.appendChild(petasan);
+                setTimeout(() => petasan.remove(), 1000);
+            }
+        }
+    </script>
+</body>
+</html>
